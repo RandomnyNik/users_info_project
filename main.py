@@ -1,6 +1,6 @@
 import telebot
 import secret
-import part_db.db as db
+import db
 import analyze
 
 bot = telebot.TeleBot(secret.TOKEN)
