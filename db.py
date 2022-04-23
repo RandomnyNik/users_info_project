@@ -5,7 +5,7 @@ con = sqlite3.connect(secret.DB_PATH, check_same_thread=False)
 cur = con.cursor()
 
 def init():
-    with open("create_table.sql", 'r') as f:
+    with open("sql/create_table_users_info.sql", 'r') as f:
         cur.execute(f.read())
         con.commit()
 
