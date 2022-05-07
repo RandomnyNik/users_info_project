@@ -39,23 +39,6 @@ def save(id, data):
                                         data['count_of_answers']))               
     con.commit()
 
-# def update(user, uid):
-#     sql = "INSERT INTO users_info ('user_id',               \
-#                                     'count_of_messages',    \
-#                                     'count_of_questions',   \
-#                                     'count_of_answers',     \
-#                                     'level')                \
-#                 VALUES ({}, {}, {}, {}, {})                 \
-#                 ON CONFLICT DO UPDATE  SET                    \
-                
-#                 ".format(uid,
-#                         user['count_of_messages'], 
-#                         user['count_of_questions'],
-#                         user['count_of_answers'],
-#                         user['level']
-#                 )
-#     cur.execute(sql)
-#     con.commit()
 
 def ms(user, uid):
     cur.execute('''UPDATE users_info SET count_of_messages = {} WHERE user_id = {}'''.format(
@@ -86,5 +69,13 @@ def answer_save(q_id, answer):
 
 def get_current_que_id(uid):
     return cur.execute(f"SELECT id_question FROM users_info WHERE user_id = '{uid}'").fetchone()
+def que(user, uid):
+    cur.execute('''UPDATE users_info SET count_of_questions = {} WHERE user_id = {}'''.format(
+        user["count_of_questions"], str(uid)))
+    con.commit()
+def ans(user, uid):
+    cur.execute('''UPDATE users_info SET count_of_answers = {} WHERE user_id = {}'''.format(
+        user["count_of_answers"], str(uid)))
+    con.commit()
 
     

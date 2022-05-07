@@ -51,7 +51,7 @@ def create_user(msg):
         "level": "menu"
     }
     # Создаем аналатику пользователя
-    users_analyze[msg.from_user.id] = analyze.new_user()
+    #users_analyze[msg.from_user.id] = analyze.new_user()
     db.save(msg.from_user.id, users[msg.from_user.id] )
     bot.send_message(msg.from_user.id, " Я тебя не знаю")
 
@@ -82,14 +82,22 @@ def answer_handler(msg):
 
 def menu_handler(msg):
     #### Count
+    if msg.text.lower() == "задать вопрос":
+        count_que = users[msg.from_user.id]["count_of_questions"] + 1
+        users[msg.from_user.id]["count_of_questions"] = count_que
+    if msg.text.lower() == "дать ответ":
+        count_ans = users[msg.from_user.id]["count_of_answers"] + 1
+        users[msg.from_user.id]["count_of_answers"] = count_ans
     print(users[msg.from_user.id])
+
     count_ms = users[msg.from_user.id]["count_of_messages"] + 1
-    users[msg.from_user.id]["count_of_messages"] =  count_ms
+    users[msg.from_user.id]["count_of_messages"] = count_ms
     bot.send_message(msg.from_user.id, 'Ты писал мне  {}  раз'.format(
             count_ms
     ))
+    db.que(users[msg.from_user.id], msg.from_user.id)
     db.ms(users[msg.from_user.id], msg.from_user.id)
-
+    db.ans(users[msg.from_user.id], msg.from_user.id)
     #### Analyze
     if msg.from_user.id in users_analyze:
         analyze.handler(users_analyze[msg.from_user.id], msg.text)
